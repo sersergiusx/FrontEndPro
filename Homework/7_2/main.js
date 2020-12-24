@@ -24,19 +24,26 @@ console.log('Homework 7.2');
  }
 */
 
-let count = 0;
+function factory(item) {
+    let count = 0;
+    let result;
 
-function step(item) {
-    return sqr(item[count++]);
-
-    function sqr(x) {
-        return x*x;
-    }
+    return function(callback) {
+        result = item[count++];
+        if (!callback || typeof callback != 'function') {
+            return result;
+        } else {
+            return callback(result);
+        }
+    };
 }
 
-let factory = [2, 8, 9, 2, 4]
+function sqr(x) {
+    return x*x;
+}
 
-console.log(step(factory));
-console.log(step(factory));
-console.log(step(factory));
+let step = factory([2, 8, 9, 2, 4]);
 
+console.log(step());
+console.log(step(sqr));
+console.log(step());
