@@ -28,22 +28,49 @@ function divMove(event) {
     let preJump = Number(div.style.bottom.slice(0, -2));
     let preMove = Number(div.style.left.slice(0, -2));
 
-    if (event.keyCode === 32 && !event.repeat && !event.ctrlKey) {
-        div.style.bottom = preJump + 100 + 'px';
-        setTimeout(function() {
-            div.style.bottom = preJump + 'px';
-        }, 200);
-    } else if (event.keyCode === 38&& !event.ctrlKey) {
-        div.style.bottom = preJump + step + 'px';
-    } else if (preJump != 0 && event.keyCode === 40 && !event.ctrlKey) {
-        div.style.bottom = preJump - step + 'px';
-    } else if (preMove != 0 && event.keyCode === 37) {
-        div.style.left = preMove - step + 'px';
-    } else if (event.keyCode === 39) {
-        div.style.left = preMove + step + 'px';
-    } else if (event.keyCode === 17) {
-        div.style.height = ctrlY + 'px';
-        div.style.width = ctrlX + 'px';
+    // if (event.keyCode === 32 && !event.repeat && !event.ctrlKey) {
+    //     div.style.bottom = preJump + 100 + 'px';
+    //     setTimeout(function() {
+    //         div.style.bottom = preJump + 'px';
+    //     }, 200);
+    // } else if (event.keyCode === 38&& !event.ctrlKey) {
+    //     div.style.bottom = preJump + step + 'px';
+    // } else if (preJump > 0 && event.keyCode === 40 && !event.ctrlKey) {
+    //     div.style.bottom = preJump - step + 'px';
+    // } else if (preMove > 0 && event.keyCode === 37) {
+    //     div.style.left = preMove - step + 'px';
+    // } else if (event.keyCode === 39) {
+    //     div.style.left = preMove + step + 'px';
+    // } else if (event.keyCode === 17) {
+    //     div.style.height = ctrlY + 'px';
+    //     div.style.width = ctrlX + 'px';
+    // }
+
+    switch(true) {
+        case event.keyCode === 32 && !event.repeat && !event.ctrlKey:
+            div.style.bottom = preJump + 100 + 'px';
+            setTimeout(function() {
+                div.style.bottom = preJump + 'px';
+            }, 100);
+            break;
+        case event.keyCode === 38 && !event.ctrlKey:
+            div.style.bottom = preJump + step + 'px';
+            break;
+        case preJump > 0 && event.keyCode === 40 && !event.ctrlKey:
+            div.style.bottom = preJump - step + 'px';
+            break;
+        case preMove > 0 && event.keyCode === 37:
+            div.style.left = preMove - step + 'px';
+            break;
+        case event.keyCode === 39:
+            div.style.left = preMove + step + 'px';
+            break;
+        case event.keyCode === 17:
+            div.style.height = ctrlY + 'px';
+            div.style.width = ctrlX + 'px';
+            break;
+        default:
+            return;
     }
 }
 
