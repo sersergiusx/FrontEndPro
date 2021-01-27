@@ -14,75 +14,42 @@ console.log("Homework 13.1");
 
 let div = document.querySelector('.div');
 let step = 20;
+let y = div.clientHeight;
+let x = div.clientWidth;
+let ctrlY = y - y / 100 * 40;
+let ctrlX = x + x / 100 * 15;
 
 window.addEventListener('load', function() {
-    document.addEventListener('keydown', divJump);
-    document.addEventListener('keydown', divMoveUp);
-    document.addEventListener('keydown', divMoveDown);
-    document.addEventListener('keydown', divMoveLeft);
-    document.addEventListener('keydown', divMoveRight);
-    document.addEventListener('keydown', divCtrl);
+    document.addEventListener('keydown', divMove);
+    document.addEventListener('keyup', ctrl);
 });
 
-function divJump(event) {
-    let y = Number(div.style.bottom.slice(0, -2));
-    console.log(event);
+function divMove(event) {
+    let preJump = Number(div.style.bottom.slice(0, -2));
+    let preMove = Number(div.style.left.slice(0, -2));
+
     if (event.keyCode === 32 && !event.repeat && !event.ctrlKey) {
-        div.style.bottom = y + 100 + 'px';
+        div.style.bottom = preJump + 100 + 'px';
         setTimeout(function() {
-            div.style.bottom = y + 'px';
+            div.style.bottom = preJump + 'px';
         }, 200);
+    } else if (event.keyCode === 38&& !event.ctrlKey) {
+        div.style.bottom = preJump + step + 'px';
+    } else if (preJump != 0 && event.keyCode === 40 && !event.ctrlKey) {
+        div.style.bottom = preJump - step + 'px';
+    } else if (preMove != 0 && event.keyCode === 37) {
+        div.style.left = preMove - step + 'px';
+    } else if (event.keyCode === 39) {
+        div.style.left = preMove + step + 'px';
+    } else if (event.keyCode === 17) {
+        div.style.height = ctrlY + 'px';
+        div.style.width = ctrlX + 'px';
     }
 }
 
-function divMoveUp(event) {
-    let y = Number(div.style.bottom.slice(0, -2));
-
-    if (event.keyCode === 38 && !event.repeat && !event.ctrlKey) {
-        div.style.bottom = y + step + 'px';
-    }
-}
-
-function divMoveDown(event) {
-    let y = Number(div.style.bottom.slice(0, -2));
-
-    if (y == 0) {
-        return;
-    } else if (event.keyCode === 40 && !event.repeat && !event.ctrlKey) {
-        div.style.bottom = y - step + 'px';
-    }
-}
-
-function divMoveLeft(event) {
-    let x = Number(div.style.left.slice(0, -2));
-
-    if (x == 0) {
-        return;
-    } else if (event.keyCode === 37 && !event.repeat) {
-        div.style.left = x - step + 'px';
-    }
-}
-
-function divMoveRight(event) {
-    let x = Number(div.style.left.slice(0, -2));
-    
-    if (event.keyCode === 39 && !event.repeat) {
-        div.style.left = x + step + 'px';
-    }
-}
-
-function divCtrl(event) {
-    let y = div.clientHeight;
-    let resY = y / 100 * 40;
-    let x = div.clientWidth;
-    let resX = x / 100 * 15;
-    
-    if (event.keyCode === 17 && !event.repeat) {
-        div.style.height = y - resY + 'px';
-        div.style.width = x + resX + 'px';
-        setTimeout(function() {
-            div.style.height = y + 'px';
-            div.style.width = x + 'px';
-        }, 200);
+function ctrl(event) {
+    if (event.keyCode === 17) {
+        div.style.height = y + 'px';
+        div.style.width = x + 'px';
     }
 }
