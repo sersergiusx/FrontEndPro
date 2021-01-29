@@ -12,7 +12,6 @@ console.log("Homework 14.1");
 
 window.addEventListener('load', function() {
     let div = document.querySelector('.div');
-    let container = document.querySelector('.container');
     let hJump = 100;
     let step = 20;
     let divHeight = div.clientHeight;
@@ -20,9 +19,10 @@ window.addEventListener('load', function() {
     let ctrlY = divHeight - divHeight / 100 * 40;
     let ctrlX = divWidth + divWidth / 100 * 15;
     let ctrl = false;
-    let jump = false;
     let hWindows = window.innerHeight;
     let wWindows = window.innerWidth;
+    // let jump = false;
+    // let container = document.querySelector('.container');
 
     document.addEventListener('keydown', divMove);
 
