@@ -59,7 +59,7 @@ window.addEventListener('load', function() {
         let preMove = Number(div.style.left.slice(0, -2));
     
         switch(true) {
-            case event.keyCode === 32 && !event.repeat && preJump + divHeight + hJump < hWindows:
+            case event.keyCode === 32 && !event.repeat:
                 Jump();
                 break;
             case event.keyCode === 38 && !ctrl && preJump + divHeight + step <= hWindows:
@@ -124,7 +124,8 @@ window.addEventListener('load', function() {
 
     function Jump() {
         let preJump = Number(document.querySelector('.div').style.bottom.slice(0, -2));
-        if(!ctrl) {
+        
+        if(!ctrl && preJump + divHeight + hJump < hWindows) {
             div.animate([
                 { bottom: preJump + 'px', easing: 'ease-out' },
                 { bottom: preJump + hJump + 'px', easing: 'ease-in' },
