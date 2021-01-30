@@ -123,8 +123,8 @@ window.addEventListener('load', function() {
     }
 
     function Jump() {
-        let preJump = Number(document.querySelector('.div').style.bottom.slice(0, -2));
-        
+        let preJump = Number(div.style.bottom.slice(0, -2));
+
         if(!ctrl && preJump + divHeight + hJump < hWindows) {
             div.animate([
                 { bottom: preJump + 'px', easing: 'ease-out' },
