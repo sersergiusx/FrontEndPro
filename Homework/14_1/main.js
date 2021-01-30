@@ -12,44 +12,54 @@ console.log("Homework 14.1");
 
 window.addEventListener('load', function() {
     let div = document.querySelector('.div');
-    let hJump = 100;
-    let step = 20;
+    let container = document.querySelector('.container');
+    let contextMenu = document.querySelector('.context-menu');
     let divHeight = div.clientHeight;
     let divWidth = div.clientWidth;
-    let ctrlY = divHeight - divHeight / 100 * 40;
-    let ctrlX = divWidth + divWidth / 100 * 15;
-    let ctrl = false;
     let hWindows = window.innerHeight;
     let wWindows = window.innerWidth;
-    // let jump = false;
-    // let container = document.querySelector('.container');
+    let ctrl = false;
+    let ctrlY = divHeight - divHeight / 100 * 40;
+    let ctrlX = divWidth + divWidth / 100 * 15;
+    let hJump = 100;
+    let step = 20;
+    let list = [
+        {
+            title: 'Jump',
+            action: Jump,
+            btn: 'Space',
+        },
+        {
+            title: 'Remove',
+            action: Remove,
+            btn: 'Shift+R',
+        },
+        {
+            title: 'Change Color',
+            action: ChangeColor,
+            btn: 'Shift+C',
+        },
+    ];
 
     document.addEventListener('keydown', divMove);
+    document.addEventListener('contextmenu', fContextMenu);
+
+    list.forEach(function (item) {
+        let btn = document.createElement('button');
+
+        btn.addEventListener('click', function() {
+            item['action']();
+        });
+        btn.innerHTML = '<span>' + item['title'] + '</span><span>' + item['btn'] + '</span>';
+        contextMenu.appendChild(btn);
+    });
 
     function divMove(event) {
         let preJump = Number(div.style.bottom.slice(0, -2));
         let preMove = Number(div.style.left.slice(0, -2));
-
-        // slow motion
-
-        // let contextStyle = window.getComputedStyle(div);
-        // let preJump = parseInt(contextStyle.getPropertyValue('bottom'));
-        // let preMove = parseInt(contextStyle.getPropertyValue('left'));
     
         switch(true) {
-            case event.keyCode === 32 && !event.repeat && !ctrl && !jump && preJump + divHeight + hJump < hWindows:
-
-                // jump with variable on load and divMove
-
-                // jump = true;
-                // div.style.bottom = preJump + hJump + 'px';
-                // setTimeout(function() {
-                //     div.style.bottom = preJump + 'px';
-                // }, 200);
-                // setTimeout(function() {
-                //     jump = false;
-                // }, 300);
-
+            case event.keyCode === 32 && !event.repeat && preJump + divHeight + hJump < hWindows:
                 Jump();
                 break;
             case event.keyCode === 38 && !ctrl && preJump + divHeight + step <= hWindows:
@@ -86,102 +96,53 @@ window.addEventListener('load', function() {
         }
     }
 
-    // context menu
+    function fContextMenu(event) {
+        event.preventDefault();
 
-    let contextMenu = document.querySelector('.context-menu');
-
-    let list = [
-        {
-            title: 'Jump',
-            action: 'Jump',
-            btn: 'Space',
-        },
-        {
-            title: 'Remove',
-            action: 'Remove',
-            btn: 'Shift+R',
-        },
-        {
-            title: 'Change Color',
-            action: 'ChangeColor',
-            btn: 'Shift+C',
-        },
-    ];
-
-    list.forEach(function (item) {
-        contextMenu.innerHTML += '<button tabindex="-1" onclick=' + item['action'] + '()><span>' + item['title'] + '</span><span>' + item['btn'] + '</span></button>';
-    });
-
-    document.addEventListener('contextmenu', function(event) {
         let contextStyle = window.getComputedStyle(contextMenu);
         let hContextMenu = parseInt(contextStyle.getPropertyValue('height'));
         let wContextMenu = parseInt(contextStyle.getPropertyValue('width'));
         let clientY = event.clientY;
         let clientX = event.clientX;
 
-        event.preventDefault();
-
         if (clientX >= wWindows - wContextMenu) {
             clientX -= wContextMenu;
         };
-
         if (clientY >= hWindows - hContextMenu) {
             clientY -= hContextMenu;
         };
-
         contextMenu.classList.add('show');
         contextMenu.style.top = clientY + 'px';
         contextMenu.style.left = clientX + 'px';
-
         document.addEventListener('click', hideContextMenu);
-    });
+    }
 
-    function hideContextMenu(event) {
+    function hideContextMenu() {
         contextMenu.classList.remove('show');
         document.removeEventListener('click', hideContextMenu);
     }
 
-    // with variable on load
-
-    // function ChangeColor() {
-    //     let x = Math.floor(Math.random()*254);
-    //     let y = Math.floor(Math.random()*254);
-    //     let z = Math.floor(Math.random()*254);
-
-    //     container.style.backgroundColor = 'rgb(' + x +',' + y +',' + z +')';
-    // }
-
-    // function Remove() {
-    //     div.style.bottom = 0 + 'px';
-    //     div.style.left = 0 + 'px';
-    // }
-});
-
-function ChangeColor() {
-    let x = Math.floor(Math.random()*254);
-    let y = Math.floor(Math.random()*254);
-    let z = Math.floor(Math.random()*254);
-
-    document.querySelector('.container').style.backgroundColor = 'rgb(' + x +',' + y +',' + z +')';
-}
-
-function Remove() {
-    document.querySelector('.div').style.bottom = 0 + 'px';
-    document.querySelector('.div').style.left = 0 + 'px';
-}
-
-let jump = false;
-
-function Jump() {
-    if(!jump) {
-        jump = true;
-        let preJump = Number(document.querySelector('.div').style.bottom.slice(0, -2))
-        document.querySelector('.div').style.bottom = preJump + 100 + 'px';
-        setTimeout(function() {
-            document.querySelector('.div').style.bottom = preJump + 'px';
-        }, 200);
-        setTimeout(function() {
-            jump = false;
-        }, 300);
+    function Jump() {
+        let preJump = Number(document.querySelector('.div').style.bottom.slice(0, -2));
+        if(!ctrl) {
+            div.animate([
+                { bottom: preJump + 'px', easing: 'ease-out' },
+                { bottom: preJump + hJump + 'px', easing: 'ease-in' },
+                { bottom: preJump + 'px', easing: 'ease-out' }],
+            300);
+        }
     }
-}
+
+    function ChangeColor() {
+        let x = Math.floor(Math.random()*255);
+        let y = Math.floor(Math.random()*255);
+        let z = Math.floor(Math.random()*255);
+
+        container.style.backgroundColor = 'rgb(' + x +',' + y +',' + z +')';
+    }
+
+    function Remove() {
+        div.style.bottom = 0 + 'px';
+        div.style.left = 0 + 'px';
+    }
+});
