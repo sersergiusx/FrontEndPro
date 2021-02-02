@@ -35,6 +35,7 @@ window.addEventListener('load', function() {
     function fRange(event) {
         result = event.target.valueAsNumber;
         number.valueAsNumber = result;
+        
         fGreen();
     };
 
@@ -42,10 +43,10 @@ window.addEventListener('load', function() {
         let count = event.target.valueAsNumber;
 
         if (count >= 0 && count <= 100) {
-            result = event.target.valueAsNumber;
+            result = count;
             range.valueAsNumber = result;
         };
-        
+
         fGreen();
     };
 
