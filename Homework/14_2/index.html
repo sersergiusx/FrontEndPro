@@ -4,8 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homework 14.2</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: max-content;
+            margin: 20px auto;
+        }
+        
+        .box {
+            display: flex;
+            margin: 20px;
+            justify-content: center;
+        }
+        
+        .box input {
+            margin: 20px;
+        }
+
+        .box ul {
+            border: 1px solid black;
+            height: 150px;
+            width: 50px;
+            display: flex;
+            flex-direction: column-reverse;
+            padding: 0;
+        }
+
+        .box ul li {
+            list-style-type: none;
+        }
+
+        .red {
+            background-color: red;
+            width: 100%;
+            height: 8px;
+        }
+
+        .green {
+            background-color: green;
+            width: 100%;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="box">
+            <input class="range" type="range">
+            <input class="number" type="number" min="1" max="100">
+        </div>
+        <div class="box">
+            <ul>
+                <li class="green">
+
+                </li>
+                <li class="red">
+
+                </li>
+            </ul>
+        </div>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>
