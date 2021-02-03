@@ -23,7 +23,6 @@ window.addEventListener('load', function() {
     let number = document.querySelector('.number');
     let green = document.querySelector('.green');
     let red = document.querySelector('.red');
-    let result = range.valueAsNumber;
 
     number.valueAsNumber = range.valueAsNumber;
 
@@ -33,8 +32,7 @@ window.addEventListener('load', function() {
     number.addEventListener('input', fNumber);
 
     function fRange(event) {
-        result = event.target.valueAsNumber;
-        number.valueAsNumber = result;
+        number.valueAsNumber = event.target.valueAsNumber;
         
         fGreen();
     };
@@ -43,24 +41,25 @@ window.addEventListener('load', function() {
         let count = event.target.valueAsNumber;
 
         if (count >= 0 && count <= 100) {
-            result = count;
-            range.valueAsNumber = result;
+            range.valueAsNumber = count;
         };
 
         fGreen();
     };
 
     function fGreen() {
-        green.style.height = result + 'px';
+        let count = range.valueAsNumber;
 
-        if (result < 20) {
-            red.style.height = result / 100 * 2 + 'px'; 
-        } else if (result >= 20 && result <= 50) {
-            red.style.height = result / 100 * 4 + 'px'; 
-        } else if (result > 50 && result <= 75) {
-            red.style.height = result / 100 * 6 + 'px'; 
+        green.style.height = count + 'px';
+
+        if (count < 20) {
+            red.style.height = count / 100 * 2 + 'px'; 
+        } else if (count >= 20 && count <= 50) {
+            red.style.height = count / 100 * 4 + 'px'; 
+        } else if (count > 50 && count <= 75) {
+            red.style.height = count / 100 * 6 + 'px'; 
         } else {
-            red.style.height = result / 100 * 8 + 'px';
+            red.style.height = count / 100 * 8 + 'px';
         }
     }
 })
