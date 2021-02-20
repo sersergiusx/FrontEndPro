@@ -28,8 +28,7 @@ let result = 0;
 countSallary(company);
 
 function countSallary(obj) {
-    let count = 0,
-        values = Object.values(obj);
+    let values = Object.values(obj);
     
     for (let key in values) {
         let keys = values[key];
@@ -37,12 +36,12 @@ function countSallary(obj) {
         if (Array.isArray(keys)) {
             for (let item in keys) {
                 console.log(keys[item]);
-                count += keys[item].salary
+                result += keys[item].salary
             }
         } else {
-            countSallary(keys)
+            countSallary(keys);
         }
     }
-
-    console.log(result += count);
 }
+
+console.log(result);
